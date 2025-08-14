@@ -13,7 +13,7 @@ A delightful web application that helps you discover what plants are in season a
 
 ### Prerequisites
 
-- Node.js (version 16 or higher)
+- Node.js (version 20 or higher)
 - npm or yarn package manager
 
 ### Installation
@@ -34,7 +34,7 @@ npm install
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:3000`
+4. Open your browser and navigate to `http://localhost:8000`
 
 ## 🛠️ Tech Stack
 
@@ -59,13 +59,13 @@ pocket-plants-frontend/
 
 ### Available Scripts
 
-- `npm run dev` - Start development server on port 3000
+- `npm run dev` - Start development server on port 8000
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 
 ### Backend Integration
 
-The frontend expects a backend server running on `http://localhost:8000` with the following endpoint:
+The frontend expects a backend server running on a different port (e.g., `http://localhost:3000`) with the following endpoint:
 - `GET /plants` - Returns an array of plant objects with emoji and name properties
 
 ## 🎯 MVP Roadmap
