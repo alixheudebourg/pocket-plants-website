@@ -65,7 +65,7 @@ pocket-plants-frontend/
 
 ### Backend Integration
 
-The frontend expects a backend server running on a different port (e.g., `http://localhost:3000`) with the following endpoint:
+The frontend expects a backend server running on port 3000 with the following endpoint:
 - `GET /plants` - Returns an array of plant objects with emoji and name properties
 
 ## 🎯 MVP Roadmap
