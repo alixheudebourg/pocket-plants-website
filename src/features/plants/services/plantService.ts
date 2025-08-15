@@ -2,6 +2,19 @@ import { Plant, PlantCategory, DifficultyLevel } from '../types/plant';
 
 const API_BASE_URL = 'http://localhost:3000';
 
+// Backend response structure
+interface PlantsResponse {
+  plants: Plant[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalPlants: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+  filters: Record<string, any>;
+}
+
 /**
  * Plant service for API calls and data management
  */
@@ -16,7 +29,9 @@ export class PlantService {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return await response.json();
+      const data: PlantsResponse = await response.json();
+      console.log('Backend response:', data); // Debug log
+      return data.plants; // Extract plants from the response
     } catch (error) {
       console.error('Error fetching plants:', error);
       throw error;

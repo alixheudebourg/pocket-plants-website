@@ -42,6 +42,8 @@ export const usePlants = (): UsePlantsReturn => {
     setError(null);
     try {
       const data = await PlantService.getAllPlants();
+      console.log('Plants fetched:', data); // Debug log
+      console.log('Plants count:', data.length); // Debug log
       setPlants(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');

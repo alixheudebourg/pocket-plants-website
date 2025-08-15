@@ -20,8 +20,8 @@ export const PlantCard: React.FC<PlantCardProps> = ({
     emoji,
     category,
     difficulty,
-    description,
-    daysToHarvest,
+    notes,
+    growingTime,
     sunlight,
     water
   } = plant;
@@ -78,17 +78,17 @@ export const PlantCard: React.FC<PlantCardProps> = ({
           </p>
         )}
         
-        {description && (
+        {notes && (
           <p className="text-sm text-gray-700 line-clamp-2">
-            {description}
+            {notes}
           </p>
         )}
 
         {/* Growing Info */}
         <div className="grid grid-cols-2 gap-2 pt-2">
-          {daysToHarvest && (
+          {growingTime && (
             <div className="text-xs text-gray-600">
-              <span className="font-medium">Harvest:</span> {daysToHarvest} days
+              <span className="font-medium">Harvest:</span> {growingTime}
             </div>
           )}
           

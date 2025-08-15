@@ -51,16 +51,17 @@ export const PlantDetail: React.FC<PlantDetailProps> = ({
     emoji,
     category,
     difficulty,
-    description,
-    growingSeasons,
-    daysToHarvest,
+    notes,
+    seasons,
+    growingTime,
     sunlight,
     water,
-    tips,
-    imageUrl,
-    plantingGuide,
-    companionPlants,
-    pests
+    soil,
+    images,
+    careLevel,
+    companions,
+    pests,
+    avoid
   } = plant;
 
   const getDifficultyColor = (diff: string): string => {
@@ -111,13 +112,27 @@ export const PlantDetail: React.FC<PlantDetailProps> = ({
               {category}
             </p>
           )}
-          {description && (
+          {notes && (
             <p className="text-gray-700 text-lg leading-relaxed">
-              {description}
+              {notes}
             </p>
           )}
         </div>
       </div>
+
+      {/* Plant Images */}
+      {images && images.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Plant Images</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {images.map((image, index) => (
+              <div key={index} className="bg-gray-200 rounded-lg h-48 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Image: {image}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -139,53 +154,52 @@ export const PlantDetail: React.FC<PlantDetailProps> = ({
                   <p className="text-gray-600">{water}</p>
                 </div>
               )}
-              {daysToHarvest && (
+              {growingTime && (
                 <div>
-                  <span className="font-medium text-gray-700">Days to Harvest:</span>
-                  <p className="text-gray-600">{daysToHarvest} days</p>
+                  <span className="font-medium text-gray-700">Growing Time:</span>
+                  <p className="text-gray-600">{growingTime}</p>
                 </div>
               )}
-              {growingSeasons && growingSeasons.length > 0 && (
+              {seasons && seasons.length > 0 && (
                 <div>
                   <span className="font-medium text-gray-700">Growing Seasons:</span>
-                  <p className="text-gray-600">{growingSeasons.join(', ')}</p>
+                  <p className="text-gray-600">{seasons.join(', ')}</p>
+                </div>
+              )}
+              {plant.planting && (
+                <div>
+                  <span className="font-medium text-gray-700">Planting Time:</span>
+                  <p className="text-gray-600">{plant.planting}</p>
+                </div>
+              )}
+              {plant.harvest && (
+                <div>
+                  <span className="font-medium text-gray-700">Harvest Time:</span>
+                  <p className="text-gray-600">{plant.harvest}</p>
+                </div>
+              )}
+              {plant.biomes && plant.biomes.length > 0 && (
+                <div>
+                  <span className="font-medium text-gray-700">Hardiness Zones:</span>
+                  <p className="text-gray-600">{plant.biomes.join(', ')}</p>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Planting Guide */}
-          {plantingGuide && (
+          {/* Soil Requirements */}
+          {soil && (
             <div className="bg-white rounded-lg shadow-sm border p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Planting Guide</h3>
-              <div className="prose prose-gray max-w-none">
-                {typeof plantingGuide === 'string' ? (
-                  <p>{plantingGuide}</p>
-                ) : (
-                  <ul className="list-disc pl-5 space-y-2">
-                    {Object.entries(plantingGuide).map(([key, value]) => (
-                      <li key={key}>
-                        <span className="font-medium capitalize">{key}:</span> {value}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Soil Requirements</h3>
+              <p className="text-gray-700">{soil}</p>
             </div>
           )}
 
-          {/* Growing Tips */}
-          {tips && tips.length > 0 && (
+          {/* Care Level */}
+          {careLevel && (
             <div className="bg-white rounded-lg shadow-sm border p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Growing Tips</h3>
-              <ul className="space-y-2">
-                {tips.map((tip, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="text-green-500 mr-2">💡</span>
-                    <span className="text-gray-700">{tip}</span>
-                  </li>
-                ))}
-              </ul>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Care Level</h3>
+              <p className="text-gray-700 capitalize">{careLevel}</p>
             </div>
           )}
         </div>
@@ -193,11 +207,11 @@ export const PlantDetail: React.FC<PlantDetailProps> = ({
         {/* Right Column - Sidebar */}
         <div className="space-y-6">
           {/* Companion Plants */}
-          {companionPlants && companionPlants.length > 0 && (
+          {companions && companions.length > 0 && (
             <div className="bg-white rounded-lg shadow-sm border p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Companion Plants</h3>
               <div className="space-y-2">
-                {companionPlants.map((companion, index) => (
+                {companions.map((companion: string, index: number) => (
                   <div key={index} className="flex items-center text-sm text-gray-600">
                     <span className="text-green-500 mr-2">🌿</span>
                     {companion}
@@ -212,10 +226,25 @@ export const PlantDetail: React.FC<PlantDetailProps> = ({
             <div className="bg-white rounded-lg shadow-sm border p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Pests to Watch For</h3>
               <div className="space-y-2">
-                {pests.map((pest, index) => (
+                {pests.map((pest: string, index: number) => (
                   <div key={index} className="flex items-center text-sm text-gray-600">
                     <span className="text-red-500 mr-2">🐛</span>
                     {pest}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Plants to Avoid */}
+          {avoid && avoid.length > 0 && (
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Plants to Avoid</h3>
+              <div className="space-y-2">
+                {avoid.map((plant: string, index: number) => (
+                  <div key={index} className="flex items-center text-sm text-gray-600">
+                    <span className="text-orange-500 mr-2">⚠️</span>
+                    {plant}
                   </div>
                 ))}
               </div>

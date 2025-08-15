@@ -168,6 +168,10 @@ export const PlantList: React.FC<PlantListProps> = ({ onPlantSelect }) => {
         <p className="text-gray-600">
           {loading ? 'Loading plants...' : `Found ${plants.length} plant${plants.length !== 1 ? 's' : ''}`}
         </p>
+        {/* Debug info */}
+        <p className="text-xs text-gray-400 mt-1">
+          Debug: plants array length = {plants.length}, plants = {JSON.stringify(plants.slice(0, 2))}
+        </p>
       </div>
 
       {/* Plants Grid */}
